@@ -19,7 +19,7 @@ Database Version: DuckDB v1.4.1 (Andium) b390a7c376
 TODO: Check Activity Monitory before running tests to ensure relative consistency, kill all bad background tasks
 
 Data Generation:
-TPC-H with scale factor 10
+TPC-H with scale factor 1 and/or 10
 '''
 
 # Creating a duckdb file using tpch
@@ -169,8 +169,8 @@ def run_tests():
 
     queries = [join_1_query, join_2_query, join_3_query, join_5_query, join_10_query]
     query_join_amounts = [1, 2, 3, 5, 10]
-    num_threads = [4, 8, 16, 32]
-    num_memory = ['1GB', '2GB', '4GB', '8GB']
+    num_threads = [1, 2, 4, 8, 16]
+    num_memory = ['1GB', '2GB', '4GB', '8GB', '16GB']
 
     for thread in num_threads:
         print(f'Tests with {thread} threads:')
