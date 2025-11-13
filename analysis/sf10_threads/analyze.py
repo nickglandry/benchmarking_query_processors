@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 data = {
-    'memory': [
-        '1GB', '1GB', '1GB', '1GB', '1GB',
-        '2GB', '2GB', '2GB', '2GB', '2GB',
-        '4GB', '4GB', '4GB', '4GB', '4GB',
+    'threads': [
+        '1', '1', '1', '1', '1',
+        '2', '2', '2', '2', '2',
+        '4', '4', '4', '4', '4',
         '8GB', '8GB', '8GB', '8GB', '8GB',
         '16GB', '16GB', '16GB', '16GB', '16GB'
     ],
