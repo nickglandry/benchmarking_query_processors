@@ -23,8 +23,8 @@ TPC-H with scale factor 1 and/or 10
 '''
 
 # Creating a duckdb file using tpch
-DB_FILE = 'db_files/tpch_sf1.duckdb'
-SCALE_FACTOR = 1
+DB_FILE = 'db_files/tpch_sf10.duckdb'
+SCALE_FACTOR = 10
 
 def create_db_files():
     # Create a file if it does not exist
