@@ -23,7 +23,7 @@ TPC-H with scale factor 1 and/or 10
 '''
 
 # Creating a duckdb file using tpch
-DB_FILE = 'db_files/tpch_sf10.duckdb'
+DB_FILE = os.path.join('db_files', 'tpch_sf10.duckdb')
 SCALE_FACTOR = 10
 
 def create_db_files():
@@ -66,7 +66,7 @@ def save_result(threads, memory, joins, results):
     std_dev = np.std(results_np, ddof = 1) # Using Sample Standard Deviation
 
     # A row in the csv follows the format: threads,memory,joins,mean,std_dev,mad,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10
-    csv_file = f'results/results_sf{SCALE_FACTOR}.csv'
+    csv_file = os.path.join('results', f'results_sf{SCALE_FACTOR}.csv')
     with open(csv_file, 'a', newline='') as file:
         writer = csv.writer(file)
         row_arr = [threads, memory, joins, mean, std_dev, mad] + results
