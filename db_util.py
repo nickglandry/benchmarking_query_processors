@@ -18,12 +18,12 @@ OS: Mac OS Tahoe 26.1
 Database Version: DuckDB v1.4.1 (Andium) b390a7c376
 
 Data Generation:
-TPC-H with scale factor 100
+TPC-H with scale factor 10
 '''
 
 # Creating a duckdb file using tpch
-DB_FILE = os.path.join('db_files', 'tpch_sf100.duckdb')
-SCALE_FACTOR = 100
+SCALE_FACTOR = 30
+DB_FILE = os.path.join('db_files', f'tpch_sf{SCALE_FACTOR}.duckdb')
 
 def create_db_files():
     # Create a file if it does not exist
@@ -39,17 +39,18 @@ def create_db_files():
 
 def execute_test(num_joins_query, num_threads, memory_limit):
     results = [] # Array of wall times for last 10 runs (13 runs, 10 returned)
-    run_config = {
-        'threads': num_threads,
-        'memory_limit': memory_limit
-    }
-    con = duckdb.connect(database=DB_FILE, read_only=True, config=run_config)
+    # run_config = {
+    #     'threads': num_threads,
+    #     'memory_limit': memory_limit
+    # }
+    con = duckdb.connect(database=DB_FILE, read_only=True)
+    con.execute(f"PRAGMA threads={num_threads};")
+    con.execute(f"PRAGMA memory_limit='{memory_limit}';")
     for i in range(0, 13):
         # run query, get results
         start_time = time.time()
         result = con.sql(num_joins_query).fetchall()
         end_time = time.time()
-        print(result)
         elapsed_time = end_time - start_time
         if i > 2:
             results.append(elapsed_time)
@@ -126,8 +127,11 @@ def run_tests():
 
     queries = [join_1_query, join_2_query, join_3_query, join_5_query, join_10_query]
     query_join_amounts = [1, 2, 3, 5, 10]
-    num_threads = [4, 6, 8, 10, 12, 14]
-    num_memory = ['4GB', '6GB', '8GB', '10GB', '12GB', '14GB']
+    num_threads = [4, 6, 8, 10, 12]
+    # num_memory = ['128MB', '256MB', '512MB', '1GB', '2GB', '3GB']
+    num_memory = ['4GB', '5GB', '6GB', '7GB', '8GB']
+
+
 
     for thread in num_threads:
         print(f'Tests with {thread} threads:')
