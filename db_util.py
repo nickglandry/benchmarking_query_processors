@@ -123,7 +123,8 @@ def run_tests():
     JOIN part p ON l.l_partkey = p.p_partkey
     JOIN partsupp ps 
     ON p.p_partkey = ps.ps_partkey
-    AND s.s_suppkey = ps.ps_suppkey;
+    AND s.s_suppkey = ps.ps_suppkey
+    JOIN region r2 ON n3.n_regionkey = r2.r_regionkey;
     """
 
     queries = [join_1_query, join_2_query, join_3_query, join_5_query, join_10_query]
@@ -131,22 +132,22 @@ def run_tests():
     num_threads = [1, 2, 4, 8, 16]
     # num_memory = ['128MB', '256MB', '512MB', '1GB', '2GB', '3GB']
     # num_memory = ['1GB', '2GB', '4GB', '8GB', '16GB']
-    num_memory = ['3GB', '5GB', '6GB', '7GB']
+    num_memory = ['1GB', '2GB', '3GB', '4GB', '5GB', '6GB', '7GB', '8GB', '16GB']
 
 
-    # for thread in num_threads:
-    #     print(f'Tests with {thread} threads:')
-    #     for i in range(len(queries)):
-    #         results = execute_test(queries[i], thread, None)
-    #         save_result(thread, 'N/A', query_join_amounts[i], results)
-    #         print(f'Results for {query_join_amounts[i]} join(s): {results}')
-    
-    for memory in num_memory:
-        print(f'Tests with {memory} memory:')
+    for thread in num_threads:
+        print(f'Tests with {thread} threads:')
         for i in range(len(queries)):
-            results = execute_test(queries[i], None, memory)
-            save_result('N/A', memory, query_join_amounts[i], results)
+            results = execute_test(queries[i], thread, None)
+            save_result(thread, 'N/A', query_join_amounts[i], results)
             print(f'Results for {query_join_amounts[i]} join(s): {results}')
+    
+    # for memory in num_memory:
+    #     print(f'Tests with {memory} memory:')
+    #     for i in range(len(queries)):
+    #         results = execute_test(queries[i], None, memory)
+    #         save_result('N/A', memory, query_join_amounts[i], results)
+    #         print(f'Results for {query_join_amounts[i]} join(s): {results}')
 
     # for thread in num_threads:
     #     print(f'Tests with {thread} threads:')
