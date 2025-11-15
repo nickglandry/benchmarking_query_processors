@@ -12,7 +12,7 @@ Reported Statistics: mean +- standard deviaition +- mean absolute deviation
 Configuration Options: memory_limit, row_group_size, (backup) USING COMPRESSION in table definition
 
 System Info:
-CPU Model: Intel Core i5-14400F (2.50 GHz)
+CPU Model: Intel Core i5-14400F 10 Core (6 Performance, 4 Efficieny) (2.50 GHz)
 Memory: 32 GB RAM
 OS: Windows 11 Home (25H2)
 Database Version: DuckDB v1.4.1 (Andium) b390a7c376
@@ -78,12 +78,14 @@ def save_result(threads, memory, joins, results):
 
 def run_tests():
     join_1_query = """
+    -- Query 1: 1 Join (Tables: Customer and Nation)
     SELECT COUNT(*)
     FROM customer c
     JOIN nation n ON c.c_nationkey = n.n_nationkey
     """
 
     join_2_query = """
+    -- Query 2: 2 Joins (Tables: Customer, Nation, and Orders)
     SELECT COUNT(*)
     FROM customer c
     JOIN nation n ON c.c_nationkey = n.n_nationkey
@@ -91,6 +93,7 @@ def run_tests():
     """
 
     join_3_query = """
+    -- Query 3: 3 Joins (Tables: Customer, Nation, Orders, and Lineitem)
     SELECT COUNT(*)
     FROM customer c
     JOIN nation n ON c.c_nationkey = n.n_nationkey
@@ -99,6 +102,7 @@ def run_tests():
     """
 
     join_5_query = """
+    -- Query 5: 5 Joins (Tables: Customer, Nation, Orders, Lineitem, Part, and Partsupp)
     SELECT COUNT(*)
     FROM customer c
     JOIN nation n ON c.c_nationkey = n.n_nationkey
@@ -111,8 +115,9 @@ def run_tests():
     """
 
     join_10_query = """
+    -- Query 10: 10 Joins (Tables: Region x2, Nation x3, Customer, Orders, Lineitem, Supplier, Part, Partsupp)
     SELECT COUNT(*)
-    FROM region r
+    FROM region r -- Starting from region instead of customer due to performance constraints
     JOIN nation n1 ON r.r_regionkey = n1.n_regionkey
     JOIN nation n2 ON n1.n_regionkey = n2.n_regionkey
     JOIN customer c ON n2.n_nationkey = c.c_nationkey
@@ -129,9 +134,7 @@ def run_tests():
 
     queries = [join_1_query, join_2_query, join_3_query, join_5_query, join_10_query]
     query_join_amounts = [1, 2, 3, 5, 10]
-    num_threads = [16, 1, 2, 4, 8, 16]
-    # num_memory = ['128MB', '256MB', '512MB', '1GB', '2GB', '3GB']
-    # num_memory = ['1GB', '2GB', '4GB', '8GB', '16GB']
+    num_threads = [1, 2, 4, 8, 16]
     num_memory = ['1GB', '2GB', '3GB', '4GB', '5GB', '6GB', '7GB', '8GB', '16GB']
 
 
@@ -142,12 +145,12 @@ def run_tests():
             save_result(thread, 'N/A', query_join_amounts[i], results)
             print(f'Results for {query_join_amounts[i]} join(s): {results}')
     
-    # for memory in num_memory:
-    #     print(f'Tests with {memory} memory:')
-    #     for i in range(len(queries)):
-    #         results = execute_test(queries[i], None, memory)
-    #         save_result('N/A', memory, query_join_amounts[i], results)
-    #         print(f'Results for {query_join_amounts[i]} join(s): {results}')
+    for memory in num_memory:
+        print(f'Tests with {memory} memory:')
+        for i in range(len(queries)):
+            results = execute_test(queries[i], None, memory)
+            save_result('N/A', memory, query_join_amounts[i], results)
+            print(f'Results for {query_join_amounts[i]} join(s): {results}')
 
     # for thread in num_threads:
     #     print(f'Tests with {thread} threads:')
