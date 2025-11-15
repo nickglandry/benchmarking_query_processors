@@ -12,9 +12,9 @@ Reported Statistics: mean +- standard deviaition +- mean absolute deviation
 Configuration Options: memory_limit, row_group_size, (backup) USING COMPRESSION in table definition
 
 System Info:
-CPU Model: Apple M2 8 Core (4 performance, 4 efficiency) CPU
-Memory: 16 GB LPDDR5 RAM
-OS: Mac OS Tahoe 26.1
+CPU Model: Intel Core i5-14400F (2.50 GHz)
+Memory: 32 GB RAM
+OS: Windows 11 Home (25H2)
 Database Version: DuckDB v1.4.1 (Andium) b390a7c376
 
 Data Generation:
@@ -129,7 +129,7 @@ def run_tests():
 
     queries = [join_1_query, join_2_query, join_3_query, join_5_query, join_10_query]
     query_join_amounts = [1, 2, 3, 5, 10]
-    num_threads = [1, 2, 4, 8, 16]
+    num_threads = [16, 1, 2, 4, 8, 16]
     # num_memory = ['128MB', '256MB', '512MB', '1GB', '2GB', '3GB']
     # num_memory = ['1GB', '2GB', '4GB', '8GB', '16GB']
     num_memory = ['1GB', '2GB', '3GB', '4GB', '5GB', '6GB', '7GB', '8GB', '16GB']
