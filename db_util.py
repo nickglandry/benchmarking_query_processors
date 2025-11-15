@@ -130,7 +130,9 @@ def run_tests():
     query_join_amounts = [1, 2, 3, 5, 10]
     num_threads = [1, 2, 4, 8, 16]
     # num_memory = ['128MB', '256MB', '512MB', '1GB', '2GB', '3GB']
-    num_memory = ['1GB', '2GB', '4GB', '8GB', '16GB']
+    # num_memory = ['1GB', '2GB', '4GB', '8GB', '16GB']
+    num_memory = ['3GB', '5GB', '6GB', '7GB']
+
 
     # for thread in num_threads:
     #     print(f'Tests with {thread} threads:')
