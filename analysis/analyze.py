@@ -41,8 +41,8 @@ def analyze_threads():
         capsize=4
     )
     ax.set_xlabel("Threads")
-    ax.set_ylabel("Mean Value (log scale)")
-    # ax.set_yscale("log")
+    ax.set_ylabel("Mean Value (Seconds) log scale")
+    ax.set_yscale("log")
     ax.set_ylim(bottom=1e-3)
     ax.set_title("Mean Performance by Threads across Joins")
     ax.tick_params(axis='x', rotation=0)
@@ -67,7 +67,7 @@ def analyze_memory():
     df = pd.DataFrame(data)
 
     # Sort threads for plotting
-    desired_order = ['1GB', '2GB', '4GB', '8GB', '16GB']
+    desired_order = ['1GB', '2GB', '3GB', '4GB', '5GB', '6GB', '7GB', '8GB', '16GB']
     df['memory'] = pd.Categorical(df['memory'], categories=desired_order, ordered=True)
 
 
@@ -82,9 +82,9 @@ def analyze_memory():
         figsize=(15, 7),
         capsize=4
     )
-    ax.set_xlabel("Memory")
-    ax.set_ylabel("Mean Value (log scale)")
-    # ax.set_yscale("log")
+    ax.set_xlabel("Memory (GB)")
+    ax.set_ylabel("Mean Value (Seconds) log scale")
+    ax.set_yscale("log")
     ax.set_ylim(bottom=1e-3)
     ax.set_title("Mean Performance by Memory across Joins")
     ax.tick_params(axis='x', rotation=0)
